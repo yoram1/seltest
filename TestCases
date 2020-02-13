@@ -1,0 +1,90 @@
+package tests;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import org.junit.Assert;
+
+public class TestCases {
+	
+	WebDriver driver = null; 
+	
+	@Before
+	public void setup() {
+		// useually use page objects patterns and initialize pages but noe for saving time all in the test
+    // also had problems with configuration so could not check... please consider as psaoudo code..
+		    
+		/*Starting ChromeDriver 75.0.3770.140 (2d9f97485c7b07dc18a74666574f19176731995c-refs/branch-heads/3770@{#1155}) on port 3475
+			  Only local connections are allowed.
+			  Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+			*/
+    
+    
+	}
+		
+	
+	@Test
+	public void assignment1() throws InterruptedException {
+		
+		 System.setProperty("webdriver.chrome.driver", "C:\\Users\\gcj478\\yorams\\selenium\\chromedriver.exe");
+		 WebDriver driver = new ChromeDriver(); 
+         // gogle page 
+		 driver.get("http://www.google.com"); 
+         // find text field
+		 WebElement textField = driver.findElement(By.name("lst-ib"));
+         // type 
+		 textField.sendKeys("selenium");
+         textField.submit();
+         
+         //Get list of web-elements with tagName  - a
+         List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+          
+         //Traversing through the list and printing its text along with link address
+         for(WebElement link:allLinks){
+        	 System.out.println(link.getText() + " - " + link.getAttribute("href"));
+
+	}
+	
+         
+         @Test
+     	public void assignment2() throws InterruptedException {
+     		
+     		System.setProperty("webdriver.chrome.driver", "C:\\Users\\gcj478\\yorams\\selenium\\chromedriver.exe");
+     		WebDriver driver = new ChromeDriver(); 
+		    driver.get("http://www.google.com"); 
+		    
+		    WebElement textField = driver.findElement(By.name("lst-ib"));
+		    textField.sendKeys("selenium");
+		    
+		    // git hub on drop down
+		    Select sel = new Select(driver.findElement(By.id("your-dropdown-id")));
+		    sel.selectByVisibleText("selenium github");
+		    textField.submit();
+		    
+		    // git hub first link 
+		    WebElement firstLink = (driver.findElements(By.tagName("a"))).get(0);
+		    Assert.assertTrue("link is not correct","https//github.com/SeleniumHQ/selenium".contentEquals(firstLink.getAttribute("href")));
+		    firstLink.click();
+		    
+		    // repo name
+		    WebElement gitHubRepoName = driver.findElement(By.xpath("//strong/a"));
+		    Assert.assertTrue("link is not correct","/SeleniumHQ/selenium".contentEquals(gitHubRepoName.getAttribute("href")));
+		    
+		    // button Clone or doenload
+		    Select btn = new Select(driver.findElement(By.xpath("//button[text()=\"Clone or doenload\"]")));
+		    
+        // due to configuration issues and other issues not finishet yet ...
+		   
+            
+     	}
+	
+
+}
